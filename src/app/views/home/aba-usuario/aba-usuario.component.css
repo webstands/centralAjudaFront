@@ -1,0 +1,46 @@
+
+
+.btnNewUser {
+    align-self: flex-end; /* Alinha o botão à direita */
+    margin-bottom: 20px;/* Espaçamento opcional entre o botão e o conteúdo principal */
+}
+
+.table-container {
+    width: 80%;
+}
+
+mat-card {
+    width: 100%;
+}
+
+mat-card-content {
+    overflow-x: auto;
+}
+
+img {
+    border-radius: 5px;
+    object-fit: cover;
+}
+.custom-button {
+    background-color: #FF8A65; /* Cor que combina com o gradiente */
+    color: #ffffff; /* Texto branco para contraste */
+  }
+  
+  .custom-button:hover {
+    background-color: #FF7043; /* Tom mais escuro para o hover */
+  }
+  
+  .main-body {
+    display: flex;
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    align-items: flex-start; /* Alinha os itens ao topo */
+    height: 100vh; /* Define a altura da main-body para ocupar toda a altura da tela */
+    padding: 20px; /* Espaçamento interno */
+  }
+  
+  .content-container {
+    width: 80%; /* Largura máxima de 80% da tela */
+    max-width: 1200px; /* Largura máxima absoluta */
+    margin: 0 auto; /* Centraliza horizontalmente */
+  }
+  

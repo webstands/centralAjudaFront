@@ -1,0 +1,13 @@
+.custom-toolbar {
+    background: linear-gradient(to right, #FF8A65, #FFD54F);
+    color: #ffffff;
+  }
+  
+  .custom-toolbar .mat-icon {
+    color: #ffffff;
+  }
+  
+  .espacamento-toolbar {
+    flex: 1 1 auto;
+  }
+  

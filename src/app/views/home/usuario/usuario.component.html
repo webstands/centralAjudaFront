@@ -1,0 +1,54 @@
+<div mat-dialog-title>
+    <h1>{{data.newUser ? 'Novo Usuário' : 'Edição de Usuário'}}</h1>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+    <div mat-dialog-content class="content">
+        <div class="row">
+            <mat-form-field appearance="outline" class="styled-field">
+                <mat-label>Nome</mat-label>
+                <input matInput type="text" required formControlName="name">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline" class="styled-field">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" required placeholder="Ex. test@gmail.com" formControlName="email">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline" class="styled-field">
+                <mat-label>Login</mat-label>
+                <input matInput required formControlName="username">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline" class="styled-field" *ngIf="data.isAdmin">
+                <mat-label>Permissão</mat-label>
+                <mat-select formControlName="permissao" required>
+                    <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="row" *ngIf="data.newUser">
+            <mat-form-field appearance="outline" class="styled-field">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" required formControlName="password">
+            </mat-form-field>
+        </div>
+
+        <div class="row" *ngIf="data.newUser">
+            <mat-form-field appearance="outline" class="styled-field">
+                <mat-label>Confirme Password</mat-label>
+                <input matInput type="password" required formControlName="confirmPassword">
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit">{{!data.newUser ? 'Atualizar' : 'Salvar'}}</button>
+    </div>
+</form>

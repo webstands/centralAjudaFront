@@ -1,0 +1,18 @@
+@import 'node_modules/ngx-toastr/toastr.css';
+
+
+/* Custom styles for the toastr */
+.toast-success {
+  background-color: #4caf50 !important;
+  color: #ffffff !important;
+}
+
+.toast-error {
+  background-color: #f44336 !important;
+  color: #ffffff !important;
+}
+
+.toast-top-right {
+  top: 12px;
+  right: 12px;
+}

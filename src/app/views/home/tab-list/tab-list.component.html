@@ -1,0 +1,8 @@
+<mat-tab-group class="selected-tab-background">
+  <mat-tab *ngIf="isUserAdmin() " label="Gerenciar Usuários">
+    <aba-usuario></aba-usuario>
+  </mat-tab>
+  <mat-tab label="{{isUserGerenciador() || isUserAdmin() ? 'Gerenciar Chamados' : 'Meus chamados'}}">
+   <!-- <aba-chamados></aba-chamados>-->
+  </mat-tab>
+</mat-tab-group>

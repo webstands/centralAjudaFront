@@ -1,0 +1,20 @@
+<div class="authentication">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <div class="auth-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Login</mat-label>
+                <input matInput type="text" formControlName="username">
+            </mat-form-field>
+        </div>
+        <div class="auth-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions class="auth-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Entrar</button>
+            <button type="button" mat-raised-button class="custom-button" (click)="adicionarUsuario()">Novo Usuário</button>
+        </div>
+    </form>
+</div>

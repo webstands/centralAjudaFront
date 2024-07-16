@@ -1,0 +1,23 @@
+.vertical-tab-group {
+    display: flex;
+    flex-direction: column;
+    height: 400px; /* ajuste conforme necessário */
+  }
+  
+  .mat-tab-labels {
+    flex-direction: column;
+  }
+  
+  .mat-tab-label {
+    width: auto; /* largura automática para labels verticais */
+    text-align: left; /* alinhamento do texto à esquerda */
+  }
+  
+  .mat-tab-body-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+
+  
