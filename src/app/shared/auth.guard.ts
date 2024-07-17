@@ -18,7 +18,9 @@ export class AuthGuard {
     if (this.authService.isUserLoggedIn()) {
       return true;
     } else {
-      this.toastr.error("Sessão Expirada por favor realizar o login", 'Erro');
+      if (state.url !== '/login') {
+        this.toastr.error("Sessão Expirada por favor realizar o login", 'Erro');
+      }
       this.router.navigate(['login']);
       return false;
     }
