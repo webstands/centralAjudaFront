@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/f669f885-1252-4dec-80d2-eb2c13ee79cb)#Central ajuda
+
+#Central ajuda
 Este projeto foi gerado com Angular CLI versão 16.2.1.
 
 #comandos:
@@ -26,7 +27,7 @@ Execute ng serve para iniciar um servidor de desenvolvimento.
  senha: 123
 ![image](https://github.com/user-attachments/assets/3744f731-469f-4fa6-a4f1-93dd1b70821f)
 ![image](https://github.com/user-attachments/assets/af75382c-e330-4b92-afec-f7e13df0f313)
-
+![image](https://github.com/user-attachments/assets/f669f885-1252-4dec-80d2-eb2c13ee79cb)
 
 
 
