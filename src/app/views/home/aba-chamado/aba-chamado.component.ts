@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { ChamadoService } from 'src/app/shared/service/chamado.service';
 import { ChamadoComponent } from '../chamado/chamado.component';
+import { MessageService } from 'src/app/shared/service/MessageService';
 
 @Component({
   selector: 'aba-chamado',
@@ -38,24 +39,47 @@ export class AbaChamadoComponent implements OnInit {
     private chamadoService: ChamadoService,
     private toastr: ToastrService,
     private authService: AuthService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.authService.loadUserScopeFromToken();
     this.authService.loadUserIdFromToken();
-    this.getListaChamado();   
+    if(!this.isUser()){
+      this.getListaChamadoTodos();   
+    }else{
+      this.getListaChamado();   
+    }
+   
 
-   /* this.webSocketService.getMessages().subscribe((message) => {
-      if (this.authService.getUserScope() === 'GERENCIADOR') {
-        this.toastr.info(`Novo chamado adicionado: ${message.descricao}`, 'Notificação');
-        this.getListaChamado(); // Atualizar a lista de chamados
+    // Inicia o polling de mensagens
+    this.messageService.pollMessages().subscribe({
+      next: (message) => {
+        console.log(message);
+        if (this.isUserGerenciador() && message !== "No messages in the queue") {
+          this.toastr.info('Novo chamado adicionado', 'Notificação');
+          this.getListaChamadoTodos();
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao buscar mensagens', err);
       }
-    });*/
+    });
   }
 
   isUserAdmin(): boolean {
     const userScope = this.authService.getUserScope();
     return userScope === 'ADMIN';
+  }
+
+  isUserGerenciador(): boolean {
+    const userScope = this.authService.getUserScope();
+    return userScope === 'GERENCIADOR';
+  }
+
+  isUser(): boolean {
+    const userScope = this.authService.getUserScope();
+    return userScope === 'USUARIO';
   }
 
   adicionarUsuario() {
@@ -75,6 +99,17 @@ export class AbaChamadoComponent implements OnInit {
 
   getListaChamado() {
     this.chamadoService.getListaChamado( this.authService.getUserId()).subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      },
+      error: console.log,
+    });
+  }
+
+  getListaChamadoTodos() {
+    this.chamadoService.getListaChamadoTodos().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
@@ -115,7 +150,12 @@ export class AbaChamadoComponent implements OnInit {
     this.chamadoService.deletarChamado(id).subscribe({
       next: (res) => {
         this.toastr.success('Chamado deletado com sucesso!', 'Sucesso');
-        this.getListaChamado();
+        if(this.isUser()){
+          this.getListaChamado();
+        }else{
+          this.getListaChamadoTodos();
+        }
+        
       },
       error: (err) => {
         this.toastr.error('Erro ao deletar usuário', 'Erro');

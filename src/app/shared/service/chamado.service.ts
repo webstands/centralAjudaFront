@@ -19,6 +19,10 @@ export class ChamadoService {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 
+  getListaChamadoTodos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}`);
+  }
+
   atualizarChamado(data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}`, data);
   }
