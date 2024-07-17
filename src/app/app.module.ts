@@ -36,6 +36,8 @@ import { AbaUsuarioComponent } from './views/home/aba-usuario/aba-usuario.compon
 import { UsuarioComponent } from './views/home/usuario/usuario.component';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './views/login/login.component';
+import { AbaChamadoComponent } from './views/home/aba-chamado/aba-chamado.component';
+import { ChamadoComponent } from './views/home/chamado/chamado.component';
 
 
 const MY_DATE_FORMAT = {
@@ -56,8 +58,8 @@ const MY_DATE_FORMAT = {
     HomeComponent,
     TabListComponent,
     AbaUsuarioComponent,
-    //AbaChamadosComponent,    
-    //ChamadoComponent, 
+    AbaChamadoComponent,    
+    ChamadoComponent, 
     UsuarioComponent, 
     LoginComponent
   ],

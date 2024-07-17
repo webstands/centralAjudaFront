@@ -5,25 +5,27 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { UsuarioService } from 'src/app/shared/service/usuario.service';
-import { UsuarioComponent } from '../usuario/usuario.component';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { ChamadoService } from 'src/app/shared/service/chamado.service';
+import { ChamadoComponent } from '../chamado/chamado.component';
 
 @Component({
-  selector: 'aba-usuario',
-  templateUrl: './aba-usuario.component.html',
-  styleUrls: ['./aba-usuario.component.css']
+  selector: 'aba-chamado',
+  templateUrl: './aba-chamado.component.html',
+  styleUrls: ['./aba-chamado.component.css']
 })
-export class AbaUsuarioComponent implements OnInit {
+export class AbaChamadoComponent implements OnInit {
 
   displayedColumns: string[] = [
     'id',
-    'name',
-    'email',
-    'login',
-    'permissao',
-    'photo',
+    'subject',
+    'description',
+    'createdAt',
+    'closedAt',
+    'userId',
+    'closedById',
+    'rating',
     'action',
   ];
   dataSource!: MatTableDataSource<any>;
@@ -33,19 +35,22 @@ export class AbaUsuarioComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private usuarioService: UsuarioService,
+    private chamadoService: ChamadoService,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.authService.loadUserScopeFromToken();
+    this.authService.loadUserIdFromToken();
+    this.getListaChamado();   
 
-    console.log(this.isUserAdmin())
-    if(this.isUserAdmin()){
-      this.getListaUsuario();
-    }
-   
+   /* this.webSocketService.getMessages().subscribe((message) => {
+      if (this.authService.getUserScope() === 'GERENCIADOR') {
+        this.toastr.info(`Novo chamado adicionado: ${message.descricao}`, 'Notificação');
+        this.getListaChamado(); // Atualizar a lista de chamados
+      }
+    });*/
   }
 
   isUserAdmin(): boolean {
@@ -53,24 +58,23 @@ export class AbaUsuarioComponent implements OnInit {
     return userScope === 'ADMIN';
   }
 
-
   adicionarUsuario() {
-    const dialogRef = this.dialog.open(UsuarioComponent, {
-      width: '400px', 
-      data: { role: 'USUARIO', newUser: true, isAdmin: true } 
+    const dialogRef = this.dialog.open(ChamadoComponent, {
+      width: '480px', 
+      data: {new: true, userId: this.authService.getUserId() } 
    });
 
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getListaUsuario();
+          this.getListaChamado();
         }
       },
     });
   }
 
-  getListaUsuario() {
-    this.usuarioService.getListaUsuario().subscribe({
+  getListaChamado() {
+    this.chamadoService.getListaChamado( this.authService.getUserId()).subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
@@ -90,28 +94,28 @@ export class AbaUsuarioComponent implements OnInit {
   }
 
 
-  editarUsuario(data: any) {
+  editarChamado(data: any) {
     
-    const dialogRef = this.dialog.open(UsuarioComponent, {
-      width: '400px', 
-      data: { role: 'USUARIO', newUser: false, isAdmin: true, user: data } 
+    const dialogRef = this.dialog.open(ChamadoComponent, {
+      width: '480px', 
+      data: { role: 'USUARIO', new: false, isAdmin: true, chamado: data } 
      });
 
 
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getListaUsuario();
+          this.getListaChamado();
         }
       },
     });
   }
 
-  deletarUsuario(id: string) {
-    this.usuarioService.deletarUsuario(id).subscribe({
+  deletarChamado(id: number) {
+    this.chamadoService.deletarChamado(id).subscribe({
       next: (res) => {
-        this.toastr.success('Usuário deletado com sucesso!', 'Sucesso');
-        this.getListaUsuario();
+        this.toastr.success('Chamado deletado com sucesso!', 'Sucesso');
+        this.getListaChamado();
       },
       error: (err) => {
         this.toastr.error('Erro ao deletar usuário', 'Erro');

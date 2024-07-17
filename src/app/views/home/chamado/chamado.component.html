@@ -1,0 +1,24 @@
+<div mat-dialog-title>
+    <h1>{{data.newUser ? 'Novo Chamado' : 'Edição de Chamado'}}</h1>
+</div>
+<form [formGroup]="callForm" (ngSubmit)="onFormSubmit()">
+    <div mat-dialog-content class="content">
+        <div class="row">
+            <mat-form-field appearance="outline" class="styled-field">
+                <mat-label>Assunto</mat-label>
+                <input matInput type="text" required formControlName="subject">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline" class="styled-field">
+                <mat-label>Descricao</mat-label>
+                <textarea matInput required formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit">{{!data.new ? 'Atualizar' : 'Salvar'}}</button>
+    </div>
+</form>

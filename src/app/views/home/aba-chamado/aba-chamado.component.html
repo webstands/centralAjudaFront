@@ -1,0 +1,82 @@
+<div class="main-body">
+  <div class="content-container">
+    <div class="btnNewUser">
+      <button mat-raised-button class="custom-button" (click)="adicionarUsuario()">
+        Novo Chamado
+      </button>
+    </div>
+
+    <mat-card>
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          </ng-container>
+
+          <!-- First Name Column -->
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Assunto </th>
+            <td mat-cell *matCellDef="let row"> {{row.subject}} </td>
+          </ng-container>
+
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th>
+            <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+          </ng-container>
+
+          <!-- Login Column -->
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Criado em </th>
+            <td mat-cell *matCellDef="let row"> {{row.createdAt  | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="closedAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Concluido em </th>
+            <td mat-cell *matCellDef="let row"> {{row.closedAt  | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> usuário criação </th>
+            <td mat-cell *matCellDef="let row"> {{row.userCriacao}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="closedById">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> usuário atendimento </th>
+            <td mat-cell *matCellDef="let row"> {{row.userFechamento}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="rating">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> avaliação </th>
+            <td mat-cell *matCellDef="let row"> {{row.rating}} </td>
+          </ng-container>
+
+        
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary" (click)="editarChamado(row)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deletarChamado(row.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Selecione à página de Usuários"></mat-paginator>
+  </div>
+
+ 
+</div>

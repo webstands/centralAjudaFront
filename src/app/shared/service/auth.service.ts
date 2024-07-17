@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -8,9 +8,11 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
   private userScope: string | null = null;
+  private userId: string | null = null;
 
   constructor(private http: HttpClient) {
     this.loadUserScopeFromToken();
+    this.loadUserIdFromToken();
   }
 
   async login(authenticator: any): Promise<boolean> {
@@ -20,8 +22,13 @@ export class AuthService {
 
       // Decodificar o token e definir o escopo do usuário
       const decodedToken: any = jwt_decode(result.token);
-      if (decodedToken && decodedToken.scope) {
-        this.setUserScope(decodedToken.scope);
+      if (decodedToken) {
+        if (decodedToken.scope) {
+          this.setUserScope(decodedToken.scope);
+        }
+        if (decodedToken.sub) {
+          this.setUserId(decodedToken.sub);
+        }
       }
 
       return true;
@@ -79,12 +86,30 @@ export class AuthService {
     return this.userScope;
   }
 
+  setUserId(userId: string) {
+    this.userId = userId;
+  }
+
+  getUserId(): string | null {
+    return this.userId;
+  }
+
   public loadUserScopeFromToken() {
     const token = this.getAuthorizationToken();
     if (token) {
       const decodedToken: any = jwt_decode(token);
       if (decodedToken && decodedToken.scope) {
         this.setUserScope(decodedToken.scope);
+      }
+    }
+  }
+
+  public loadUserIdFromToken() {
+    const token = this.getAuthorizationToken();
+    if (token) {
+      const decodedToken: any = jwt_decode(token);
+      if (decodedToken && decodedToken.sub) {
+        this.setUserId(decodedToken.sub);
       }
     }
   }
